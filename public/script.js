@@ -174,6 +174,14 @@ btnRegister.addEventListener('click', async () => {
     messageArea.style.display = 'none';
 
     try {
+        await loadCredentialsFromServer();
+
+        const usernameExists = userCredentialsDb.some(cred => cred.username === username);
+        if (usernameExists) {
+            showMessage('Username already exists. Please choose a different one.', true);
+            return;
+        }
+
         const regOptions = await generateRegistrationOptionsSim(username);
         console.log("Simulated Registration Options:", regOptions);
 
